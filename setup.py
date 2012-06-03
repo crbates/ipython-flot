@@ -13,5 +13,5 @@ if baseversion < 13:
 
 setup(name="ipython_flot",
       author="Cameron Bates",
-      py_modules = ['IPython/frontend/html/notebook/flot'],
+      py_modules = ['flotplot'],
       )

@@ -52,7 +52,6 @@ class Plot():
         encoder = json.JSONEncoder()
         if data is not None:
             if type(data[0]) == list or ('numpy' in str(type(data[0])) and data[0].shape != () ):           
-                n = len(data)
                 for index,item in enumerate(data):
                     if data1 is not None:
                         d += "var d"+str(index)+" ="+ encoder.encode(zip(item,data1[index])) +";\n"                 
@@ -97,45 +96,46 @@ class Plot():
         '''
         if data is not None and len(data) > 0:      
             d, label = self._read_data(data,data1,label)
+            nplotstxt = str(self.nplots) 
             src = d + """
             var options = {
             selection: { mode: "xy" },
             legend: { position:\"""" + self.legendloc + """\"},
             };
             
-            var plot""" + str(self.nplots) + """ = $.plot($("#placeholder""" + str(self.nplots) + """"), [ """ + label + """],options);
-            var minx""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().xaxis.min;
-            var maxx""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().xaxis.max;
-            var miny""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().yaxis.min;
-            var maxy""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().yaxis.max;
+            var plot""" + nplotstxt + """ = $.plot($("#placeholder""" + nplotstxt + """"), [ """ + label + """],options);
+            var minx""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().xaxis.min;
+            var maxx""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().xaxis.max;
+            var miny""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().yaxis.min;
+            var maxy""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().yaxis.max;
             
-            var iminx""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().xaxis.min;
-            var imaxx""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().xaxis.max;
-            var iminy""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().yaxis.min;
-            var imaxy""" + str(self.nplots) + """  = plot""" + str(self.nplots) + """.getAxes().yaxis.max;            
+            var iminx""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().xaxis.min;
+            var imaxx""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().xaxis.max;
+            var iminy""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().yaxis.min;
+            var imaxy""" + nplotstxt + """  = plot""" + nplotstxt + """.getAxes().yaxis.max;            
             
-            $("#placeholder""" + str(self.nplots) + """").bind("plotselected", function (event, ranges) {
-                minx""" + str(self.nplots) + """  = ranges.xaxis.from;
-                maxx""" + str(self.nplots) + """  = ranges.xaxis.to;
-                miny""" + str(self.nplots) + """  = ranges.yaxis.from;
-                maxy""" + str(self.nplots) + """  = ranges.yaxis.to;
+            $("#placeholder""" + nplotstxt + """").bind("plotselected", function (event, ranges) {
+                minx""" + nplotstxt + """  = ranges.xaxis.from;
+                maxx""" + nplotstxt + """  = ranges.xaxis.to;
+                miny""" + nplotstxt + """  = ranges.yaxis.from;
+                maxy""" + nplotstxt + """  = ranges.yaxis.to;
             });
             
 
-            $("#zoom""" + str(self.nplots) + """").click(function() {
-                $.plot($("#placeholder""" + str(self.nplots) + """"), plot""" + str(self.nplots) + """.getData(),
+            $("#zoom""" + nplotstxt + """").click(function() {
+                $.plot($("#placeholder""" + nplotstxt + """"), plot""" + nplotstxt + """.getData(),
                       $.extend(true, {}, options, {
-                          xaxis: { min: minx""" + str(self.nplots) + """ , max: maxx""" + str(self.nplots) + """  },
-                          yaxis: { min: miny""" + str(self.nplots) + """ , max: maxy""" + str(self.nplots) + """  }
+                          xaxis: { min: minx""" + nplotstxt + """ , max: maxx""" + nplotstxt + """  },
+                          yaxis: { min: miny""" + nplotstxt + """ , max: maxy""" + nplotstxt + """  }
                 }));
 
             });
             
-            $("#home""" + str(self.nplots) + """").click(function() {
-                $.plot($("#placeholder""" + str(self.nplots) + """"), plot""" + str(self.nplots) + """.getData(),
+            $("#home""" + nplotstxt + """").click(function() {
+                $.plot($("#placeholder""" + nplotstxt + """"), plot""" + nplotstxt + """.getData(),
                       $.extend(true, {}, options, {
-                          xaxis: { min: iminx""" + str(self.nplots) + """ , max: imaxx""" + str(self.nplots) + """  },
-                          yaxis: { min: iminy""" + str(self.nplots) + """ , max: imaxy""" + str(self.nplots) + """  }
+                          xaxis: { min: iminx""" + nplotstxt + """ , max: imaxx""" + nplotstxt + """  },
+                          yaxis: { min: iminy""" + nplotstxt + """ , max: imaxy""" + nplotstxt + """  }
                 }));
 
             });
@@ -150,10 +150,11 @@ class Plot():
 
     def _insert_placeholder(self):
         #This function inserts the html tag for the plot
+        nplotstxt = str(self.nplots)
         src = """
-        <div id="placeholder""" + str(self.nplots) + """"" style="width:
+        <div id="placeholder""" + nplotstxt + """"" style="width:
         """ + str(self.pixelsx) + """px;height:""" + str(self.pixelsy) + """px;"></div>
-        <input id="home""" + str(self.nplots) + """" type="button" value="home"> <input id="zoom""" + str(self.nplots) + """" type="button" value="zoom to selection">
+        <input id="home""" + nplotstxt + """" type="button" value="home"> <input id="zoom""" + nplotstxt + """" type="button" value="zoom to selection">
         """
         IPython.core.display.display_html(IPython.core.display.HTML(data=src))
 
