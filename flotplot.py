@@ -146,7 +146,7 @@ class Plot():
         self._insert_placeholder()
         self.nplots = self.nplots + 1
         IPython.core.display.display_javascript(IPython.core.display.Javascript(data=src,
-        lib=["http://crbates.github.com/flot/jquery.flot.min.js","http://crbates.github.com/flot/jquery.flot.navigate.min.js","http://crbates.github.com/flot/jquery.flot.selection.min.js"]))
+        lib=["http://cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js","http://cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.navigate.min.js","http://cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.selection.min.js"]))
 
     def _insert_placeholder(self):
         #This function inserts the html tag for the plot
