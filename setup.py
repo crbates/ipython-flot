@@ -1,5 +1,8 @@
 from __future__ import print_function
 
+# setuptools must be imported for "python setup.py develop" to work.
+import setuptools
+
 from distutils.core import setup
 import string
 import sys
