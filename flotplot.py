@@ -45,6 +45,9 @@ class Plot():
     pixelsy = 300
     legendloc = "ne"
 
+    # Allow free-form addition of flot options.
+    options = ''
+
     def _read_data(self, data, data1, label):
         #This function takes the python data and encodes it into JSON data
         d = ""
@@ -101,6 +104,7 @@ class Plot():
             var options = {
             selection: { mode: "xy" },
             legend: { position:\"""" + self.legendloc + """\"},
+            """ + self.options + """
             };
             
             var plot""" + nplotstxt + """ = $.plot($("#placeholder""" + nplotstxt + """"), [ """ + label + """],options);
