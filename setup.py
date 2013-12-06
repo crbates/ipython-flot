@@ -9,8 +9,10 @@ import sys
 
 import IPython
 
-baseversion = int(string.split(IPython.__version__,'.')[1])
-if baseversion < 13:
+version = int(string.split(IPython.__version__,'.')[1])
+baseversion = int(string.split(IPython.__version__,'.')[0])
+print(IPython.__version__)
+if baseversion < 13 and (version == 0) :
     print("IPython version >= 0.13 required")
     sys.exit(1)
 
